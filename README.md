@@ -2,8 +2,10 @@
 ***
 
 ![Project icon](https://raw.githubusercontent.com/C-L-G/scripts/master/resource/picture/project.png)
-        [**帮助**](https://guides.github.com/activities/hello-world/)
-***
+        [**GitHub帮助**](https://guides.github.com/activities/hello-world/)<br>
+        [**Markdown帮助**](https://help.github.com/articles/getting-started-with-writing-and-formatting-on-github/)<br>
+ 
+ ***
 #概览
 
 你可以点击[@Github/C-L-G/Scripts](https://github.com/C-L-G/scripts])进行工程阅览。
@@ -32,6 +34,8 @@
 * ~~**----mkdir**~~ 
 * ~~----mkdir/svn_director_create.pl~~
 * **----perl**
+* *----perl/svn_director_create.pl*
+* *----perl/cklog*
 * **----resource**
 * **----resource/picture**
 * ----resource/picture/project.png
@@ -83,14 +87,37 @@ module verilog_top(
     output  wire  [31:0]    dout  ;
     ......    
 ```
-2. 更新了新的TODO issue #1.
+2. 更新了cklog
+
+```perl
+	#----------------------------------------------------------------------------------------------------
+#2.2 File check and open
+#----------------------------------------------------------------------------------------------------
+if((!-e "$ENV{prj_name}/digital/verif/log/bt${batnum}_subt.bat"){
+	print "\n$ENV{prj_name}/digital/verif/log/bt${batnum}_subt.bat is for checking log file,but Not Exist.\n";
+	print "Now please copy bt${batnum}_subt.bat to $ENV{prj_name}/digital/verif/log/ for checking log file.\n";
+	exit;
+}
+open	SUBTBAT,"< $ENV{prj_name}/digital/verif/log/bt${batnum}_subt.bat" or die "Open file subt.bat error : $!\n";
+open	FPASS,"> ./bt${batnum}_tc_pass.list" or die "Open file bt${batnum}_tc_pass.list error : $!\n";
+open	FFAIL,"> ./bt${batnum}_tc_fail.list" or die "Open file bt${batnum}_tc_fail.list error : $!\n";
+$tcpass_cnt = 0;
+$tcfail_cnt = 0;
+	while($line = <SUBTBAT){
+		if($line =~ /runn(\s+)-pt(\w+)(\s+)-cr(\s+)(\w+)(\s+).*-tc(\s+)(.*)/){
+			$post 		= $3;
+			$clkrate	= $6;
+```
 3. 更新了Readme中的相关描述
 ***
 
 #任务记录
 ***
+
 - [x] 目录创建脚本更新<br>
 - [ ] log自动检查脚本更新<br>
+- [ ] 其他
+
 ***
 
 #其他 
